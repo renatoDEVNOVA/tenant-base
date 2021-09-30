@@ -41,4 +41,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function booted(){
+        static::creating(function ($user){
+            $user->password = \bcrypt($user->password);
+        });
+    }
+
+    
 }

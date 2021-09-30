@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RegisteredTenantController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,5 +19,8 @@ Route::get('/', function () {
 });
 
 
+Route::get('/register', [RegisteredTenantController::class, 'create']);
+
+Route::post('/register', [RegisteredTenantController::class, 'store']);
 //register new tenant
 // require __DIR__.'/auth.php';
