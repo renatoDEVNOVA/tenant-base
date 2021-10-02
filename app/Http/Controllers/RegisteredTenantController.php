@@ -6,11 +6,6 @@ use App\Http\Requests\RegisterTenantRequest;
 use App\Models\Tenant;
 
 
-defined('BASEPATH') or exit('No direct script access allowed');
-
-
-require APPPATH . "external_libraries/aws-autoloader.php";
-
 use Aws\Route53\Route53Client;
 use Aws\Exception\CredentialsException;
 use Aws\Route53\Exception\Route53Exception;
