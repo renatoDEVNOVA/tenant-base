@@ -40,7 +40,7 @@ class RegisteredTenantController extends Controller
 
     private function createNewSubDomainAWS($subDomainName)
     {
-        $client = $this->awsClient();
+
         $client = Route53Client::factory(array(
             'region' => 'us-east-1', //region aws  
             'version' => 'latest',   // eg. latest or 2013-04-01   
