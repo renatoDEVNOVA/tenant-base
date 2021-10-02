@@ -29,11 +29,17 @@ class RegisteredTenantController extends Controller
         $tenant->createDomain(['domain' => $request->domain]);
         
         if(env('AWS_SECRET_ACCESS_KEY')!=null){
-            $this->createNewSubDomainAWS($request->domain);
+            $resp = $this->createNewSubDomainAWS($request->domain);
+            if($resp!=null){
+                return redirect(tenant_route($tenant->domains->first()->domain, 'tenant.login'));
+            }
+
+        }else{
+            return redirect(tenant_route($tenant->domains->first()->domain, 'tenant.login'));
         }
         
 
-        return redirect(tenant_route($tenant->domains->first()->domain, 'tenant.login'));
+        
     }
 
 
@@ -51,7 +57,7 @@ class RegisteredTenantController extends Controller
         $dns = env('DNS');
         $ResourceRecordsValue = array('Value' => $dns);
 
-        $client->changeResourceRecordSets([
+        $resp= $client->changeResourceRecordSets([
             'ChangeBatch' => [
                 'Changes' => [
                     [
@@ -69,6 +75,8 @@ class RegisteredTenantController extends Controller
             ],
             'HostedZoneId' => env('AWS_HOSTED_ZONE_ID'),
         ]);
+
+        return $resp;
     }
 
 }
