@@ -26,6 +26,7 @@ class RegisteredTenantController extends Controller
         if(env('AWS_SECRET_ACCESS_KEY')!=null){
             $resp = $this->createNewSubDomainAWS($request->domain);
             if($resp!=null){
+		sleep(15);
                 return redirect(tenant_route($tenant->domains->first()->domain, 'tenant.login'));
             }
 
